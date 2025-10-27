@@ -487,18 +487,6 @@ Messages organized by hex prefix:
 | 0x08xx | Admin | TCP | ADD_GAME_ITEM |
 | 0x09xx | System | TCP | HEARTBEAT, ERROR, DISCONNECT |
 
-### 3.3 Voice Chat (File Transfer)
-
-**Important Update:** Voice "call" is actually file transfer!
-
-| Old Name | New Name | Purpose |
-|----------|----------|---------|
-| VOICE_CALL_REQUEST | VOICE_FILE_UPLOAD | Upload voice file chunks (UDP) |
-| VOICE_CALL_ACCEPT | VOICE_CHAT_NOTIFY | Notify recipient of voice file (TCP) |
-| VOICE_CALL_REJECT | VOICE_FILE_ERROR | Error during transfer (TCP) |
-| VOICE_CALL_END | VOICE_FILE_COMPLETE | Transfer complete (TCP) |
-| *(new)* | VOICE_FILE_REQUEST | Request voice file download (UDP) |
-| *(new)* | VOICE_FILE_DATA | Voice file chunks (UDP) |
 
 ### 3.4 Request-Response Pattern
 
