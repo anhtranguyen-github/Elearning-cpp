@@ -1,0 +1,8 @@
+2025-10-21 13:49:36 [INFO] Logger initialized
+2025-10-21 13:49:36 [INFO] === Console Client Starting ===
+2025-10-21 13:49:39 [INFO] Connecting to 127.0.0.1:8080
+2025-10-21 13:49:39 [INFO] Connected to server
+2025-10-21 13:49:39 [INFO] Connected to server 127.0.0.1:8080
+2025-10-21 13:49:44 [WARNING] Invalid message format: 274|5|0|3|1|0
+2025-10-21 13:49:56 [ERROR] Response timeout
+2025-10-21 13:49:56 [ERROR] Login failed: 8|Timeout

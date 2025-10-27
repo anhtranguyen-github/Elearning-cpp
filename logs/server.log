@@ -1,0 +1,32 @@
+2025-10-21 13:49:33 [INFO] Logger initialized
+2025-10-21 13:49:33 [INFO] === Server Starting ===
+2025-10-21 13:49:33 [INFO] User created: admin with role 3
+2025-10-21 13:49:33 [INFO] User created: teacher1 with role 2
+2025-10-21 13:49:33 [INFO] Database initialized
+2025-10-21 13:49:33 [INFO] Socket bound to 0.0.0.0:8080
+2025-10-21 13:49:33 [INFO] Socket listening with backlog: 10
+2025-10-21 13:49:33 [INFO] Server initialized on 0.0.0.0:8080
+2025-10-21 13:49:33 [INFO] Server started, entering main loop
+2025-10-21 13:49:39 [INFO] Accepted connection from 127.0.0.1:37744
+2025-10-21 13:49:39 [INFO] ClientHandler created for 127.0.0.1:37744 [guest]
+2025-10-21 13:49:39 [INFO] New client connected: 127.0.0.1:37744
+2025-10-21 13:49:44 [DEBUG] Received 24 bytes: 273|14|0|admin|admin123
+
+2025-10-21 13:49:44 [DEBUG] extractMessages: buffer size = 24
+2025-10-21 13:49:44 [DEBUG] Found message: 273|14|0|admin|admin123
+2025-10-21 13:49:44 [DEBUG] Decoded message type: 273, payload length: 14, actual payload: admin|admin123
+2025-10-21 13:49:44 [DEBUG] About to validate message...
+2025-10-21 13:49:44 [DEBUG] Validation result: PASS
+2025-10-21 13:49:44 [DEBUG] Message validated successfully
+2025-10-21 13:49:44 [DEBUG] Extracted 1 messages, remaining buffer: 0 bytes
+2025-10-21 13:49:44 [DEBUG] Extracted 1 messages
+2025-10-21 13:49:44 [DEBUG] processMessage called for message type 273
+2025-10-21 13:49:44 [DEBUG] Calling ClientHandler::processMessage
+2025-10-21 13:49:44 [INFO] Processing message from 127.0.0.1:37744 [guest]: 273
+2025-10-21 13:49:44 [INFO] Session created for user: admin
+2025-10-21 13:49:44 [INFO] User logged in: admin
+2025-10-21 13:49:44 [DEBUG] Creating LOGIN_SUCCESS response: '3|1|0' (length: 5)
+2025-10-21 13:49:44 [DEBUG] Message created - header.payloadLength=5, payload.length()=5
+2025-10-21 13:49:44 [DEBUG] ClientHandler returned response type 274
+2025-10-21 13:49:44 [DEBUG] Sending message type 274 payload: 3|1|0
+2025-10-21 13:49:44 [INFO] Sent message type 274 (14 bytes)

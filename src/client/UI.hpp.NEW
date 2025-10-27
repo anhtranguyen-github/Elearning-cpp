@@ -1,0 +1,319 @@
+#ifndef UI_HPP
+#define UI_HPP
+
+#include "../../include/common.hpp"
+#include "../../include/message_structs.hpp"
+#include "Client.hpp"
+
+#include <QMainWindow>
+#include <QStackedWidget>
+#include <QWidget>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QGridLayout>
+#include <QFormLayout>
+#include <QPushButton>
+#include <QLineEdit>
+#include <QTextEdit>
+#include <QLabel>
+#include <QComboBox>
+#include <QListWidget>
+#include <QRadioButton>
+#include <QCheckBox>
+#include <QButtonGroup>
+#include <QMessageBox>
+#include <QGroupBox>
+#include <QTimer>
+#include <QTableWidget>
+#include <QSplitter>
+#include <QFileDialog>
+#include <QTabWidget>
+// Note: Video/Audio players would require Qt Multimedia (not included)
+// Using placeholder labels for now
+
+// Main application window with screen-based navigation
+class MainWindow : public QMainWindow {
+    Q_OBJECT
+
+public:
+    explicit MainWindow(QWidget* parent = nullptr);
+    ~MainWindow();
+
+private slots:
+    // S-1: Registration/Login Screen
+    void onLoginClicked();
+    void onRegisterClicked();
+    void onSwitchToRegister();
+    void onSwitchToLogin();
+    
+    // S-2: Initial Setup/Profile
+    void onSaveProfileClicked();
+    void onBrowseContentLocation();
+    
+    // S-3: Main Dashboard
+    void onDashboardLessonsClicked();
+    void onDashboardExercisesClicked();
+    void onDashboardGamesClicked();
+    void onDashboardChatClicked();
+    void onDashboardProfileClicked();
+    void onLogoutClicked();
+    
+    // S-4: Lesson List
+    void onLessonFilterChanged();
+    void onLessonItemClicked(QListWidgetItem* item);
+    void onBackToDashboard();
+    
+    // S-5: Lesson View
+    void onGoToExercises();
+    void onBackToLessonList();
+    
+    // S-6: Exercise/Test Screen
+    void onSubmitExercise();
+    void onNextQuestion();
+    void onBackToLessons();
+    
+    // S-7: Speaking Exercise
+    void onStartRecording();
+    void onStopRecording();
+    void onPlaybackRecording();
+    void onSubmitRecording();
+    
+    // S-8: Score & Feedback
+    void onViewMoreFeedback();
+    void onBackFromScores();
+    
+    // S-9: Games
+    void onGameTypeChanged(int index);
+    void onStartGame();
+    void onResetGame();
+    void onSubmitGameScore();
+    void onBackFromGames();
+    
+    // S-10: Communication
+    void onContactSelected(QListWidgetItem* item);
+    void onSendMessage();
+    void onInitiateCall();
+    void onEndCall();
+    void onBackFromChat();
+    
+    // Teacher Screens (T-1, T-2, T-3)
+    void onTeacherDashboard();
+    void onSubmissionSelected(QListWidgetItem* item);
+    void onSubmitFeedback();
+    void onRecordAudioFeedback();
+    
+    // Admin Screens (A-1)
+    void onAdminDashboard();
+    void onGameContentTypeChanged(int index);
+    void onAddGameItem();
+    void onBrowseImageUpload();
+    
+    // Heartbeat timer
+    void onHeartbeatTimer();
+    
+    // Connection management
+    void connectToServer();
+    void disconnectFromServer();
+
+private:
+    // Screen setup methods
+    void setupUI();
+    void setupLoginScreen();           // S-1
+    void setupProfileScreen();         // S-2
+    void setupDashboardScreen();       // S-3
+    void setupLessonListScreen();      // S-4
+    void setupLessonViewScreen();      // S-5
+    void setupExerciseScreen();        // S-6
+    void setupSpeakingScreen();        // S-7
+    void setupScoreFeedbackScreen();   // S-8
+    void setupGamesScreen();           // S-9
+    void setupChatScreen();            // S-10
+    
+    // Teacher screens
+    void setupTeacherDashboard();      // T-Dashboard
+    void setupFeedbackInboxScreen();   // T-1
+    void setupProvideFeedbackScreen(); // T-2
+    void setupTeacherChatScreen();     // T-3
+    
+    // Admin screens
+    void setupAdminDashboard();        // A-Dashboard
+    void setupGameContentScreen();     // A-1
+    
+    // Navigation helpers
+    void navigateToScreen(int screenIndex);
+    void showStudentScreens();
+    void showTeacherScreens();
+    void showAdminScreens();
+    void updateDashboard();
+    
+    // UI helpers
+    void showMessage(const QString& title, const QString& message);
+    void showError(const QString& message);
+    void showSuccess(const QString& message);
+    void updateConnectionStatus(bool connected);
+    
+    // Screen indices
+    enum ScreenIndex {
+        SCREEN_LOGIN = 0,
+        SCREEN_PROFILE,
+        SCREEN_DASHBOARD,
+        SCREEN_LESSON_LIST,
+        SCREEN_LESSON_VIEW,
+        SCREEN_EXERCISE,
+        SCREEN_SPEAKING,
+        SCREEN_SCORE_FEEDBACK,
+        SCREEN_GAMES,
+        SCREEN_CHAT,
+        SCREEN_TEACHER_DASHBOARD,
+        SCREEN_FEEDBACK_INBOX,
+        SCREEN_PROVIDE_FEEDBACK,
+        SCREEN_TEACHER_CHAT,
+        SCREEN_ADMIN_DASHBOARD,
+        SCREEN_GAME_CONTENT
+    };
+    
+    // Client and state
+    std::unique_ptr<Client> client_;
+    bool authenticated_;
+    UserData currentUser_;
+    QTimer* heartbeatTimer_;
+    
+    // Main navigation
+    QStackedWidget* stackedWidget_;
+    
+    // S-1: Login/Registration widgets
+    QWidget* loginScreen_;
+    QLineEdit* loginUsername_;
+    QLineEdit* loginPassword_;
+    QPushButton* loginButton_;
+    QPushButton* switchToRegisterButton_;
+    
+    QLineEdit* registerUsername_;
+    QLineEdit* registerEmail_;
+    QLineEdit* registerPassword_;
+    QLineEdit* registerConfirmPassword_;
+    QComboBox* registerRoleCombo_;
+    QPushButton* registerButton_;
+    QPushButton* switchToLoginButton_;
+    QWidget* registerPanel_;
+    QWidget* loginPanel_;
+    QLabel* connectionStatusLabel_;
+    
+    // S-2: Profile/Setup widgets
+    QWidget* profileScreen_;
+    QComboBox* levelCombo_;
+    QLineEdit* contentLocationEdit_;
+    QPushButton* browseContentButton_;
+    QPushButton* saveProfileButton_;
+    
+    // S-3: Dashboard widgets
+    QWidget* dashboardScreen_;
+    QPushButton* dashLessonsButton_;
+    QPushButton* dashExercisesButton_;
+    QPushButton* dashGamesButton_;
+    QPushButton* dashChatButton_;
+    QPushButton* dashProfileButton_;
+    QPushButton* logoutButton_;
+    QLabel* dashWelcomeLabel_;
+    QLabel* dashLevelLabel_;
+    QLabel* dashScoreLabel_;
+    QTextEdit* dashActivityText_;
+    
+    // S-4: Lesson List widgets
+    QWidget* lessonListScreen_;
+    QComboBox* lessonTopicFilter_;
+    QComboBox* lessonLevelFilter_;
+    QListWidget* lessonListWidget_;
+    QPushButton* backToDashboardButton_;
+    
+    // S-5: Lesson View widgets
+    QWidget* lessonViewScreen_;
+    QLabel* lessonTitleLabel_;
+    QTextEdit* lessonTextArea_;
+    QTextEdit* vocabularyArea_;
+    QPushButton* goToExercisesButton_;
+    QPushButton* backToLessonListButton_;
+    QTabWidget* lessonTabs_;
+    
+    // S-6: Exercise widgets
+    QWidget* exerciseScreen_;
+    QLabel* questionLabel_;
+    QTextEdit* questionText_;
+    QWidget* answerWidget_;  // Dynamic based on exercise type
+    QButtonGroup* mcqButtonGroup_;
+    QTextEdit* writingArea_;
+    QPushButton* submitExerciseButton_;
+    QPushButton* nextQuestionButton_;
+    QPushButton* backToLessonsButton_;
+    QLabel* timerLabel_;
+    
+    // S-7: Speaking Exercise widgets
+    QWidget* speakingScreen_;
+    QLabel* speakingPromptLabel_;
+    QTextEdit* speakingPromptText_;
+    QPushButton* startRecordButton_;
+    QPushButton* stopRecordButton_;
+    QPushButton* playbackButton_;
+    QPushButton* submitRecordingButton_;
+    QLabel* recordingStatusLabel_;
+    
+    // S-8: Score & Feedback widgets
+    QWidget* scoreFeedbackScreen_;
+    QLabel* scoreDisplayLabel_;
+    QTextEdit* systemFeedbackText_;
+    QTextEdit* teacherFeedbackText_;
+    QPushButton* viewMoreFeedbackButton_;
+    QPushButton* backFromScoresButton_;
+    
+    // S-9: Games widgets
+    QWidget* gamesScreen_;
+    QComboBox* gameTypeCombo_;
+    QWidget* gameAreaWidget_;
+    QListWidget* gameColumn1_;
+    QListWidget* gameColumn2_;
+    QPushButton* startGameButton_;
+    QPushButton* resetGameButton_;
+    QPushButton* submitGameButton_;
+    QLabel* gameScoreLabel_;
+    QPushButton* backFromGamesButton_;
+    
+    // S-10: Communication widgets
+    QWidget* chatScreen_;
+    QListWidget* contactListWidget_;
+    QTextEdit* chatHistoryText_;
+    QLineEdit* chatInputLine_;
+    QPushButton* sendMessageButton_;
+    QPushButton* initiateCallButton_;
+    QPushButton* endCallButton_;
+    QPushButton* backFromChatButton_;
+    QLabel* chatWithLabel_;
+    
+    // Teacher screens
+    QWidget* teacherDashboardScreen_;
+    QWidget* feedbackInboxScreen_;
+    QWidget* provideFeedbackScreen_;
+    QWidget* teacherChatScreen_;
+    
+    QListWidget* submissionListWidget_;
+    QTextEdit* studentWorkView_;
+    QTextEdit* feedbackInputText_;
+    QPushButton* recordAudioFeedbackButton_;
+    QPushButton* submitFeedbackButton_;
+    
+    // Admin screens
+    QWidget* adminDashboardScreen_;
+    QWidget* gameContentScreen_;
+    
+    QComboBox* gameContentTypeCombo_;
+    QLineEdit* word1Field_;
+    QLineEdit* word2Field_;
+    QLineEdit* sentence1Field_;
+    QLineEdit* sentence2Field_;
+    QLineEdit* imagePathField_;
+    QLineEdit* imageTextField_;
+    QPushButton* browseImageButton_;
+    QPushButton* addGameItemButton_;
+    QWidget* gameFormStack_;
+};
+
+#endif // UI_HPP

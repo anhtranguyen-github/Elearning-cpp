@@ -1,0 +1,11 @@
+{
+    "client": {
+        "server_host": "127.0.0.1",
+        "server_port": 8080,
+        "reconnect_attempts": 3,
+        "timeout_seconds": 30,
+        "log_file": "logs/client.log",
+        "log_level": "INFO"
+    }
+}
+
