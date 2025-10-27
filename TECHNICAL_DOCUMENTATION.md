@@ -19,7 +19,8 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│                         CLIENT-SERVER SYSTEM                         │
+│                   CLIENT-SERVER HYBRID SYSTEM                        │
+│                      (TCP + UDP Architecture)                        │
 └─────────────────────────────────────────────────────────────────────┘
 
 ┌──────────────────────┐                          ┌──────────────────────┐
@@ -31,24 +32,42 @@
 │  └────────┬───────┘  │                          │  └────────┬───────┘  │
 │           │          │                          │           │          │
 │           v          │                          │           v          │
-│  ┌────────────────┐  │                          │  ┌────────────────┐  │
-│  │ Client Logic   │  │      TCP/IP Socket      │  │  I/O Multiplex │  │
-│  │ (Client.cpp)   │◄─┼──────────────────────────┼─►│  (select/poll) │  │
+│  ┌────────────────┐  │  ──── TCP (Port 8080) ──►│  ┌────────────────┐  │
+│  │ Client Logic   │  │  Control Messages        │  │  I/O Multiplex │  │
+│  │ (Client.cpp)   │◄─┼  Auth, Chat, Commands    │  │  (select/poll) │  │
 │  └────────┬───────┘  │                          │  └────────┬───────┘  │
 │           │          │                          │           │          │
+│           │          │  ──── UDP (Port 8081) ──►│           │          │
+│           │          │  Games, Content, Files   │           │          │
 │           v          │                          │           v          │
 │  ┌────────────────┐  │                          │  ┌────────────────┐  │
 │  │   Protocol     │  │                          │  │ ClientHandler  │  │
-│  │   Layer        │  │                          │  │   (per client) │  │
+│  │   TCP + UDP    │  │                          │  │   (per client) │  │
 │  └────────┬───────┘  │                          │  └────────┬───────┘  │
 │           │          │                          │           │          │
 │           v          │                          │           v          │
 │  ┌────────────────┐  │                          │  ┌────────────────┐  │
 │  │   Network      │  │                          │  │   Database     │  │
-│  │   Layer        │  │                          │  │   (In-Memory)  │  │
+│  │ TCP + UDP Socks│  │                          │  │ + File Storage │  │
 │  └────────────────┘  │                          │  └────────────────┘  │
 │                      │                          │                      │
 └──────────────────────┘                          └──────────────────────┘
+
+Protocol Usage:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TCP (Reliable, Port 8080):
+  - Authentication (Login, Register, Logout, Token management)
+  - Chat Messages (text and voice file references)
+  - Session Management (Heartbeat, state)
+  - Administrative Commands
+  - Error Messages
+
+UDP (Fast, Port 8081):
+  - Game Data (moves, state updates)
+  - Content Streaming (lessons, videos, audio)
+  - File Transfers (voice files, lesson materials)
+  - Real-time updates
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ### 1.2 Component Architecture
@@ -208,8 +227,9 @@
 - **Picture Matching Game**: Match images with descriptions
 
 #### Communication Features
-- **Text Chat**: Real-time messaging between users and teachers
-- **Voice Call**: Initiate and manage voice calls (framework in place)
+- **Text Chat**: Real-time messaging between users and teachers via TCP
+- **Voice Messages**: Send voice files (audio recordings) in chat via UDP file transfer
+- **File Transfer**: Send and receive voice recordings and study materials via UDP
 
 #### Assessment & Feedback
 - **Score Tracking**: View cumulative scores
@@ -222,10 +242,14 @@
 
 ### 2.2 Technical Features
 
+- **Hybrid TCP/UDP Architecture**: TCP for reliable control messages, UDP for fast content delivery
 - **I/O Multiplexing**: Efficient concurrent client handling without threads
 - **Non-blocking I/O**: Prevents any single client from blocking the server
+- **Token-Based Authentication**: JWT-like tokens for secure session management
 - **Session Management**: Maintain user state and timeout inactive sessions
 - **Message Framing**: Reliable message extraction from TCP stream
+- **UDP Packet Management**: Chunked file transfer and game state updates
+- **File Transfer Protocol**: Send/receive voice files and content over UDP
 - **Cross-platform**: Runs on Windows, Linux, and macOS
 - **Heartbeat Mechanism**: Keep-alive messages to maintain connections
 

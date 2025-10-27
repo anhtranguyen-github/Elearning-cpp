@@ -23,6 +23,7 @@ This index helps you find the right documentation for your needs.
 | Document | Purpose | Best For |
 |----------|---------|----------|
 | **[README.md](README.md)** | Project overview, features, building, and running | Getting started, overview |
+| **[ARCHITECTURE_CORRECTIONS.md](ARCHITECTURE_CORRECTIONS.md)** | ⚠️ **IMPORTANT** Hybrid TCP/UDP, tokens, voice files | Accurate architecture understanding |
 | **[PROJECT_SUMMARY.md](PROJECT_SUMMARY.md)** | Complete implementation checklist and status | Understanding what's implemented |
 | **[TECHNICAL_DOCUMENTATION.md](TECHNICAL_DOCUMENTATION.md)** | Comprehensive technical guide (70+ pages) | In-depth understanding |
 | **[ARCHITECTURE_DIAGRAMS.md](ARCHITECTURE_DIAGRAMS.md)** | Visual architecture and diagrams | Visual learners, architects |
