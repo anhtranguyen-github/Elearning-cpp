@@ -479,13 +479,13 @@ Messages organized by hex prefix:
 |--------|----------|----------|----------|
 | 0x01xx | Authentication | TCP | LOGIN, REGISTER, LOGOUT, TOKEN_REFRESH |
 | 0x02xx | Study Setup | TCP | SET_LEVEL |
-| 0x03xx | Content Access | UDP | GET_LESSON_CONTENT, CONTENT_CHUNK |
+| 0x03xx | Content Access | UDP | GET_LESSON_LIST, GET_LESSON_CONTENT, CONTENT_CHUNK |
 | 0x04xx | Exercises | TCP | SUBMIT_QUIZ, SUBMIT_EXERCISE |
-| 0x05xx | Games | UDP | GAME_MOVE, MOVE_RESULT |
-| 0x06xx | Assessment | TCP | GET_SCORE, GET_FEEDBACK |
+| 0x05xx | Games | UDP | GAME_START, GAME_MOVE, GAME_END |
+| 0x06xx | Assessment | TCP | GET_SCORE, GET_FEEDBACK, SEND_FEEDBACK |
 | 0x07xx | Communication | TCP+UDP | CHAT, VOICE_CHAT_FILE |
 | 0x08xx | Admin | TCP | ADD_GAME_ITEM |
-| 0x09xx | System | TCP | HEARTBEAT, ERROR |
+| 0x09xx | System | TCP | HEARTBEAT, ERROR, DISCONNECT |
 
 ### 3.3 Voice Chat (File Transfer)
 
